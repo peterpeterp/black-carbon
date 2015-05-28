@@ -1,0 +1,7 @@
+10;0;1;3,2;x;sp1a-aimms;
+0,0;traces;21,24,26,28;x;1; ;u; ;-99;-99;aod;l; ;-99;-99;2;
+1,0;traces;19;x;1; ;u; ;-99;-99;alpha;l; ;-99;-99;1;
+2,0;traces;47;x;1; ;u; ;-99;-99;altitude [m];l; ;-99;-99;1;
+0,1;traces;40;x;1; ;u; ;-99;-99;temperature [$^\circ$c];l; ;-99;-99;1;
+1,1;traces;41;x;1; ;u; ;-99;-99;humidity [%];l; ;-99;-99;1;
+2,1;traces;43,44;x;1; ;u; ;-99;-99;wind velocity;l; ;-99;-99;2;

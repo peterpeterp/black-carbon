@@ -1,0 +1,45 @@
+65,	1001
+Herber, Andreas
+Alfred Wegener Institut
+PACES - SP2,SPTA
+Polar 6 NETCARE
+1,1
+2014,07,02, 2014, 12, 09
+1
+TimeWave, seconds
+12
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+-999,9, -999,9, -999,9, -999,9, -999,9, -999,9, -999,9, -999,9, -999,9, -999,9, -999,9, -999,9
+Time_Hr, hr UTC
+Latitude, deg
+Longitude, deg
+Altitude, m
+Temperature Riosemont, deg C
+Relative Humidity, 0-1
+Chamber Pressure, hPa
+BC Mass Concentration, mug/cm3
+Scattering Particle Numb Concentration, #/cm3
+BC Numb Concentration, #/cm3
+AOD 499,5 nm, 0-1
+AOD 1026,2 nm, 0-1
+1
+Data from SPTA are recorded with lower sampling flow
+18
+PI_CONTACT_INFO:
+PLATFORM:
+LOCATION:
+ASSOCIATED_DATA:
+INSTRUMENT_INFO:
+DATA_INFO:
+UNCERTAINTY:
+ULOD_FLAG:
+ULOD_VALUE:
+LLOD_FLAG:
+LLOD_VALUE:
+DM_CONTACT_INFO:
+PROJECT_INFO:
+STIPULATIONS_ON_USE:
+OTHER_COMMENTS:
+REVISION:
+R0:
+Time_Hr,	Latitude,	Longitude,	Altitude,	Temperature Riosemont,	Relative Humidity,	Chamber Pressure,	BC Mass Concentration,	Scattering Particle Numb Concentration,	BC Numb Concentration,	AOD 499,5 nm,	AOD 1026,2 nm,	

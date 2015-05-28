@@ -1,0 +1,5 @@
+10;0;1;4,1;x;wetter;
+0,0;traces;38;x;1;	;u;	;-99;-99;longitude [deg];l;	;-99;-99;3;
+1,0;traces;39;x;1;	;u;	;-99;-99;latitude [deg];r;	;-99;-99;1;
+2,0;traces;40;x;1;	;u;	;-99;-99;temperature [deg c];l;	;-99;-99;1;
+3,0;traces;47;x;1;	;u;	;-99;-99;altitude [m];r;	;-99;-99;1;

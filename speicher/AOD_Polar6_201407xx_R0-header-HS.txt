@@ -1,0 +1,36 @@
+36, 1001
+Herber, Andreas; Schulz, Hannes
+Alfred-Wegener-Institute, Bremerhaven, Germany
+Aerosol optical depth (AOD) from sunphotometer
+NETCARE Polar 6 Campaign 2014
+1, 1
+2014, 07, ??, 2015, 03, 09
+1
+Time_UTC, seconds
+4
+1, 1, 1, 1
+-999,-999, -999, -999
+aod_414, none, AOD at 414 nm
+aod_500, none, AOD at 500 nm
+aod_677, none, AOD at 677 nm
+aod_861, none, AOD at 861 nm
+0
+18
+PI_CONTACT_INFO: Address: Bussestrasse 24, D-27570 Bremerhaven, email: andreas.herber@awi.de; hannes.schulz@awi.de
+PLATFORM: Polar 6
+LOCATION: Aircraft location data in AIMMS_07041940Polar6_20140704_R0.ict file on FTP server (particle.chem-eng.utoronto.ca)
+ASSOCIATED_DATA: N/A
+INSTRUMENT_INFO: Sky scanning sunphotometer operated with a set of filters, AOD calculated with Beer's law
+DATA_INFO: no unit
+UNCERTAINTY: 0.005, preliminary data
+ULOD_FLAG: -7777
+ULOD_VALUE: 1.0
+LLOD_FLAG: -8888
+LLOD_VALUE: 0.0
+DM_CONTACT_INFO: N/A
+PROJECT_INFO: NETCARE Polar 6 aircraft campaign in July 2014; Resolute Bay
+STIPULATIONS_ON_USE: Preliminary data! Use of these data requires prior approval from PI
+OTHER_COMMENTS: N/A
+REVISION: R0
+R0: Preliminary data
+Time_UTC, aod_414, aod_500, aod_677, aod_861

@@ -1,0 +1,172 @@
+import Tkinter as tk
+import os, sys, subprocess, ConfigParser,time, string
+import numpy as np
+import scipy as scipy
+import datetime 
+import itertools
+import matplotlib.pyplot as plt
+from scipy.interpolate import interp1d
+from scipy.io import netcdf
+import math
+import datetime as dt
+from PIL import Image
+import numpy as np
+import Tkinter 
+import Image, ImageTk
+
+from plotten import *
+
+
+def welcher():
+	global start, ende
+	x0,x1,y0,y1=[],[],[],[]
+	for i in range(len(pos_info)):
+		x0.append(start[0]>=pos_info[i][0] and start[0]<=pos_info[i][2])
+		x1.append(ende[0]>=pos_info[i][0] and ende[0]<=pos_info[i][2])
+		y0.append(start[1]>=pos_info[i][1] and start[1]<=pos_info[i][3])
+		y1.append(ende[1]>=pos_info[i][1] and ende[1]<=pos_info[i][3])
+	return x0,x1,y0,y1
+
+def click_links(event):
+	global start
+	start=(event.x, event.y)
+	
+def drop_links(event):
+	global ende
+	ende=(event.x,event.y)
+	x0,x1,y0,y1=welcher()
+	wahl=[]
+	for i in range(len(x0)):
+		if plo.gemeinsame_achse=="y": wahl.append(i)
+		elif x0[i]==1 and x1[i]==1 and y0[i]==1 and y1[i]==1: wahl.append(i)
+	sub=wahl[0]
+	posit=[]
+	if start[1]>ende[1]:
+		posit.append((1-(start[1]-pos_info[sub][1])/float(pos_info[sub][3]-pos_info[sub][1]))*(y_info[sub][1]-y_info[sub][0])+y_info[sub][0])
+		posit.append((1-(ende[1]-pos_info[sub][1])/float(pos_info[sub][3]-pos_info[sub][1]))*(y_info[sub][1]-y_info[sub][0])+y_info[sub][0])
+		posi=sorted(posit)
+		for j in range(len(wahl)):
+			plo.sub[wahl[j]].ylow=posi[0]
+			plo.sub[wahl[j]].yhigh=posi[1]
+		canvas.create_line(0,start[1],breite/skal,start[1],dash=(5,1),fill="cyan")
+		canvas.create_text(breite/skal-50,start[1],text="ylow=%f"%posit[0])
+		canvas.create_line(0,ende[1],breite/skal,ende[1],dash=(5,1),fill="cyan")
+		canvas.create_text(breite/skal-50,ende[1],text="high=%f"%posit[1])
+
+def click_rechts(event):
+	global start
+	start=(event.x, event.y)
+	
+def drop_rechts(event):
+	global ende
+	ende=(event.x,event.y)
+	x0,x1,y0,y1=welcher()
+	wahl=[]
+	for i in range(len(x0)):
+		if plo.gemeinsame_achse=="x": wahl.append(i)
+		elif x0[i]==1 and x1[i]==1 and y0[i]==1 and y1[i]==1: wahl.append(i)
+	sub=wahl[0]
+	posit=[]
+	if start[0]<ende[0]:
+		posit.append(((start[0]-pos_info[sub][0])/float(pos_info[sub][2]-pos_info[sub][0]))*(x_info[sub][1]-x_info[sub][0])+x_info[sub][0])
+		posit.append(((ende[0]-pos_info[sub][0])/float(pos_info[sub][2]-pos_info[sub][0]))*(x_info[sub][1]-x_info[sub][0])+x_info[sub][0])
+		posi=sorted(posit)
+		for j in range(len(wahl)):
+			if plo.sub[wahl[j]].gegen!=1:
+				plo.sub[wahl[j]].xlow=posi[0]
+				plo.sub[wahl[j]].xhigh=posi[1]
+			if plo.sub[wahl[j]].gegen==1:
+				plo.zeit_start=int(posi[0])
+				plo.zeit_stop=int(posi[1])
+		canvas.create_line(start[0],0,start[0],hoehe/skal,dash=(5,1),fill="green")
+		canvas.create_text(start[0],hoehe/skal-15,text="xlow=%f"%posit[0])
+		canvas.create_line(ende[0],0,ende[0],hoehe/skal,dash=(5,1),fill="green")
+		canvas.create_text(ende[0],hoehe/skal-15,text="xhigh=%f"%posit[1])
+
+def achsen_begrenzung():
+	global plo
+	for i in range(len(plo.sub)):
+		plo.sub[i].xlow=min(x_info[i])
+		plo.sub[i].xhigh=max(x_info[i])
+		plo.sub[i].ylow=min(y_info[i])
+		plo.sub[i].yhigh=max(y_info[i])
+
+def ausschnitt_plotten(root,datum,plots,spuren,i):
+	global plo
+	plots[i].zeit_start=plo.zeit_start	
+	plots[i].zeit_stop=plo.zeit_stop	
+	plotten([datum],plots[i],spuren)	
+	plot_bearbeitung(root,datum,plots,plots[i],spuren)
+	sys.exit()
+
+def nochmal_plotten(root,datum,plots,plot,spuren):
+	plot.zeit_start=plo.zeit_start	
+	plot.zeit_stop=plo.zeit_stop
+	plotten([datum],plot,spuren)
+	root.destroy()	
+	plot_bearbeitung(root,datum,plots,plot,spuren)
+	sys.exit()
+
+def zumhauptmenu():
+	root2.destroy()	
+	os.system("python menu.py")	
+	sys.exit()
+
+def plot_bearbeitung(root,datum,plots,plot,spuren):
+	print datum,plot.name
+	global hoehe,breite,skal,canvas,sub_index,pos_info,x_info,y_info,plo,start,ende,root2
+	start,ende=(0,0),(0,0)
+	plo=plot
+	try:root.destroy()
+	except:pass
+	root2 = Tkinter.Tk()  
+	root2.geometry('1000x800+800+400')
+	root2.grid()
+
+	img= Image.open("../plots/"+datum+"_10_"+plo.name+".png")
+	txt= open("../plots/."+datum+"_10_"+plo.name+".txt","r").read().split("\n")
+	sub_index,x_info,y_info,pos_info=[],[],[],[]
+	breite,hoehe=img.size
+	skal=2
+	img.thumbnail((breite/skal,hoehe/skal), Image.ANTIALIAS)
+	b,h=img.size[0],img.size[1]
+	imgtk = ImageTk.PhotoImage(img)
+	zeilen,spalten=int(txt[0].split("\t")[0]),int(txt[0].split("\t")[1])
+	for j in range(spalten):
+		for i in range(zeilen):
+			line=txt[(j*zeilen+zeilen-1-i)*4+1].split("\t")
+			pos_info.append([float(line[0])*b,float(line[1])*h,(float(line[2])+float(line[0]))*b,(float(line[1])+float(line[3]))*h])
+			line=txt[(j*zeilen+i)*4+2].split("\t")	
+			x_info.append([float(line[0]),float(line[1])])
+			line=txt[(j*zeilen+i)*4+3].split("\t")	
+			y_info.append([float(line[0]),float(line[1])])
+	achsen_begrenzung()
+ 
+	canvas = tk.Canvas(root2, width=breite/skal, height=hoehe/skal)
+	canvas.bind("<Button-1>",click_links)
+	canvas.bind("<ButtonRelease-1>",drop_links)
+	canvas.bind("<Button-3>",click_rechts)
+	canvas.bind("<ButtonRelease-3>",drop_rechts)
+	canvas.create_image(0,0,anchor="nw",image=imgtk)
+
+	for sub in pos_info:
+		canvas.create_line(0,sub[1],breite/skal,sub[1],dash=(5,1),fill="grey")
+		canvas.create_line(0,sub[3],breite/skal,sub[3],dash=(5,1),fill="grey")
+		canvas.create_line(sub[0],0,sub[0],hoehe/skal,dash=(5,1),fill="grey")
+		canvas.create_line(sub[2],0,sub[2],hoehe/skal,dash=(5,1),fill="grey")
+	canvas.grid(row=2,column=0,columnspan=5)
+	exit=tk.Button(root2,text="Ende",command=lambda:sys.exit("Bis bald")).grid(row=0,column=0)
+	zuhauptmenu=tk.Button(root2,text="zum Hauptmenu",command=lambda:zumhauptmenu()).grid(row=0,column=1)
+	erneut=tk.Button(root2,text="erneut plotten",command=lambda:nochmal_plotten(root2,datum,plots,plot,spuren)).grid(row=0,column=2)
+	if plot.sub[0].gegen==1 and plot.sub[1].gegen==1:
+		ausschnitt=tk.Menubutton(root2,text="fuer gewahltes Zeitfenster Plot erstellen")
+		ausschnitt.grid(row=0,column=3)
+		ausschnitt.menu=tk.Menu(ausschnitt)
+		for i in range(len(plots)):
+			ausschnitt.menu.add_command(label=plots[i].name,command=lambda idd=i:ausschnitt_plotten(root2,datum,plots,spuren,idd))
+		ausschnitt['menu']=ausschnitt.menu
+
+	root2.mainloop()
+
+#plot_schau("20140708")
+

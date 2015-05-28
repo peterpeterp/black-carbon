@@ -1,0 +1,19 @@
+2082844801	 SP2
+2209161605	 SP1A
+
+
+
+-----------------fuer 8.7.2014
+3487622400	SP2
+3613939204	SP1A
+
+
+
+
+--------------------------------------------------------------------------------------------------------------
+
+stand ursprünglich in schreiben_lesen.py
+
+#timestamps - ganz komisch - scheint aber zu funktionieren ?????
+sp2_timeshift = (31556926*66 + 60*60*24*1 + 60*22 - 35)# +60*60*2)							#zwei stunden zwischen sp2(sp1a) und aimms ?????
+sp1a_timeshift = (31556926*70 + 60*60*24*2 + 60*60*1 + 60*6 + 20 +5)# +60*60*2) # +5 sind neu nach druckvergleich
