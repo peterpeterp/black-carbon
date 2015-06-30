@@ -9,7 +9,7 @@ from schreiben_lesen import *
 from plotten import * 
 from abgleich_pressure import *
 from igor_steuern import *
-from flugplot import *
+#from flugplot import *
 from plot_bearbeitung import *
 
 

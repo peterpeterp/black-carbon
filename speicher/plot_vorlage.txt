@@ -1,0 +1,33 @@
+mittelung;zeit_start;zeit_stop;grid;gemeinsame_achse;name;
+position;"traces";traces;plottyp;gegen;xlabel;xlabel_pos;xoption;xlow;xhigh;ylabel;ylabel_pos;yoption;ylow;yhigh;legcol;
+position;"traces";traces;plottyp;gegen;xlabel;xlabel_pos;xoption;xlow;xhigh;ylabel;ylabel_pos;yoption;ylow;yhigh;legcol;
+position;"traces";traces;plottyp;gegen;xlabel;xlabel_pos;xoption;xlow;xhigh;ylabel;ylabel_pos;yoption;ylow;yhigh;legcol;
+position;"traces";traces;plottyp;gegen;xlabel;xlabel_pos;xoption;xlow;xhigh;ylabel;ylabel_pos;yoption;ylow;yhigh;legcol;
+
+mittelung int:anzahl an Punkten, die zu einem gemittelt werden
+zeit_start int: zeit ab der Messreihe betrachtet wird (wenn 0 dann von Anfang der Messreihe)
+zeit_stop int: zeit bi zu der Messreihe betrachtet wird (wenn 1 dann bis Ende der Messreihe)
+grid int,int: zeilen,spalten an subplots
+gemeinsame_achse x oder y: falls für alle subplots eine Achse gleich ist
+name string:
+
+position int,int: zeile und spalte die position des subplots angeben (abhängig von grid)
+"traces" : tut momentan garnichts kann also imme traces heißen
+
+traces int,int,... : index der zu plottenen Messreihen (siehe spuren_info.txt)
+plottyp x oder y: achse gegen die die Messreihen aus traces geplottet werden
+gegen int: index der Messreihe, gegen die die Messreiehn aus traces geplottet werden (ist dann auf der Achse von plottyp)
+
+xlabel string:
+xlabel_position o oder u: achsenbeschriftung erscheint oberhalb vom plot für o, unterhalb für u
+xoption invert oder log oder \t: invertiert die AChse für invert, logarithmische Achse für log
+xlow float: untere Achsenbegrenzung (automatische AChsenbegrenzung falls -99)
+xhigh float: obere Achsenbegrenzung (automatische AChsenbegrenzung falls -99)
+
+ylabel string:
+ylabel_position o oder u: achsenbeschriftung erscheint oberhalb vom plot für o, unterhalb für u
+yoption invert oder log oder \t: invertiert die Achse für invert, logarithmische Achse für log
+ylow float: untere Achsenbegrenzung (automatische AChsenbegrenzung falls -99)
+yhigh float: obere Achsenbegrenzung (automatische AChsenbegrenzung falls -99)
+
+legcol int: anzahl an spalten in der Legende
