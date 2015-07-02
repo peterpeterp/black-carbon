@@ -22,6 +22,7 @@ def einlesen(datum_list,pfad,sp2_timeshift,sp1a_timeshift,optionen_var,kampagne)
 	#sp2_timeshift = integer of seconds that sp2 measurements have to be shifted in order to synchronize
 	#sp1a_timeshift = integer of seconds that sp1a measurements have to be shifted in order to synchronize
 	#optionen_var = list of things to do for the date (coming from check boxes in menu) 1 = do it ; 0 = skip this
+	#kampagne je nach config datei ("kampagne_...") werden unterschiedlicher icartt-header .. geladen
 
 	for datum in datum_list:
 		start=time.clock()
