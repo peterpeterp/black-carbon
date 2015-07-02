@@ -1,6 +1,21 @@
 import numpy as np
 import os, sys, subprocess, ConfigParser,time, string
 
+class kampagne_einstellung(object):
+	class_typ="Kampagneneinstellung"
+	def __init__(self,config):
+		self.name = config[0]
+		self.flugzeiten = config[1].split("\t")[-1]
+		self.icartt_sp2 = config[2].split("\t")[-1]
+		self.icartt_sp1a = config[3].split("\t")[-1]
+
+def kampagne_lesen(filename):
+	config_dat=open(filename,"r").read().split("\n")
+	kampagne=kampagne_einstellung(config_dat)
+	return kampagne
+
+
+
 class plot(object):
 	class_typ="Plot Einstellungen"
 	def __init__(self,pfad,x,subis):

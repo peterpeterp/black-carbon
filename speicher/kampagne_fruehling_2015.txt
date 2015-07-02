@@ -1,0 +1,4 @@
+fruehling 2015
+Flugzeiten:	../log/gibts_noch_nicht.txt
+SP2 ICARTT header:	speicher/auch_nicht.txt
+SP1A ICARTT header:	speicher/auch_nicht.txt

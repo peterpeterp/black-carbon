@@ -1,0 +1,4 @@
+Sommer 2014
+Flugzeiten:	../log/Netcare 2014_Polar 6_start and stop times.csv
+SP2 ICARTT header:	speicher/BC_Polar6_201407xx_R0-header.txt
+SP1A ICARTT header:	speicher/AOD_Polar6_201407xx_R0-header-HS.txt

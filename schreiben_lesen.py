@@ -16,7 +16,7 @@ conv = lambda valstr: float(valstr.decode("utf-8").replace(',','.'))
 c8 = {0:conv, 1:conv, 2:conv, 3:conv, 4:conv, 5:conv, 6:conv, 7:conv }
 c2 = {0:conv, 1:conv }
 	
-def einlesen(datum_list,pfad,sp2_timeshift,sp1a_timeshift,optionen_var):
+def einlesen(datum_list,pfad,sp2_timeshift,sp1a_timeshift,optionen_var,kampagne):
 	#datum_list = list of dates in string format as '20140708'
 	#pfad = string of path where measurement data is located
 	#sp2_timeshift = integer of seconds that sp2 measurements have to be shifted in order to synchronize
@@ -164,7 +164,8 @@ def einlesen(datum_list,pfad,sp2_timeshift,sp1a_timeshift,optionen_var):
 	# messpunkte vor abflug und nach Landung loeschen
 			try:	
 				abflug,landung=0,0
-				flug=open("../log/Netcare 2014_Polar 6_start and stop times.csv","r").readlines()
+				#flug=open("../log/Netcare 2014_Polar 6_start and stop times.csv","r").readlines()
+				flug=open(kampagne.flugzeiten,"r").readlines()
 				for i in range(11,len(flug),1):
 					if datum=="%04d%02d%02d"%(int(flug[i].split('\t')[1].split('.')[2]),int(flug[i].split('\t')[1].split('.')[1]),int(flug[i].split('\t')[1].split('.')[0])):
 						abflug,landung=int(flug[i].split('\t')[3]),int(flug[i].split('\t')[5])   
@@ -187,8 +188,8 @@ def einlesen(datum_list,pfad,sp2_timeshift,sp1a_timeshift,optionen_var):
 	# schreibt die erstellte matrix in verschiedene Dateiformate
 		if optionen_var[0]!=1:	data=np.loadtxt(string.join(['../txt/',datum,'_data.txt'],''),skiprows=1)
 		if optionen_var[1]==1:	netcdf_schreiben(data[:,:],string.join(['../netcdf/',datum,'.nc'],''))
-		if optionen_var[2]==1:	icartt_sp2_schreiben(data[:,:],datum)
-		if optionen_var[3]==1:	icartt_sp1a_schreiben(data[:,:],datum)
+		if optionen_var[2]==1:	icartt_sp2_schreiben(data[:,:],datum,kampagne)
+		if optionen_var[3]==1:	icartt_sp1a_schreiben(data[:,:],datum,kampagne)
 		if optionen_var[4]==1:	model_schreiben(datum,data[:,:],string.join(['../model_30s/','k',datum,'_30sec_final.txt'],''))
 		print datum, 'gelesen in %d s'%(time.clock()-start)
 	return data
@@ -203,8 +204,9 @@ def text_schreiben(data,datum):
 	txt.close()
 
 # --------------------------------------------- 		ICARTT SP2	--------------------------------------------
-def icartt_sp2_header(datum):
-	h=open('speicher/BC_Polar6_201407xx_R0-header.txt','r').read().split('\n')
+def icartt_sp2_header(datum,kampagne):
+	#h=open('speicher/BC_Polar6_201407xx_R0-header.txt','r').read().split('\n')
+	h=open(kampagne.icartt_sp2,'r').read().split('\n')
 	h[6]=string.join([string.join(list(datum)[0:4],''),',',string.join(list(datum)[4:6],''),',',string.join(list(datum)[6:8],''),', ',time.strftime("%Y, %m, %d")],'')
 	for i in range(len(h)): icartt.write(string.join([h[i],'\n'],''))
 	return h[11]	
@@ -220,11 +222,11 @@ def icartt_sp2_data(data_original):
 	np.savetxt(icartt,data,fmt=['%d','%.5f'],delimiter=",",newline="\n")
 	return data
 
-def icartt_sp2_schreiben(data_original,datum):
+def icartt_sp2_schreiben(data_original,datum,kampagne):
 	global icartt
 	name=string.join(['../icartt/','SP2_',datum,'.ict'],'')
 	icartt=open(name,'w')
-	fill_neu = icartt_sp2_header(datum)
+	fill_neu = icartt_sp2_header(datum,kampagne)
 	icartt_sp2_data(data_original)
 	icartt.close()
 	punkt=open(name,'r').read()
@@ -233,8 +235,9 @@ def icartt_sp2_schreiben(data_original,datum):
 	komma.close()	
 
 # --------------------------------------------- 		ICARTT SP1A	--------------------------------------------
-def icartt_sp1a_header(datum):
-	h=open('speicher/AOD_Polar6_201407xx_R0-header-HS.txt','r').read().split('\n')
+def icartt_sp1a_header(datum,kampagne):
+	#h=open('speicher/AOD_Polar6_201407xx_R0-header-HS.txt','r').read().split('\n')
+	h=open(kampagne.icartt_sp1a,'r').read().split('\n')
 	h[6]=string.join([string.join(list(datum)[0:4],''),',',string.join(list(datum)[4:6],''),',',string.join(list(datum)[6:8],''),', ',time.strftime("%Y, %m, %d")],'')
 	for i in range(len(h)-1): icartt.write(string.join([h[i],'\n'],''))
 	icartt.write(string.join([h[i+1]],''))
@@ -252,12 +255,12 @@ def icartt_sp1a_data(data_original):
 	np.savetxt(icartt,data,fmt=['%d','%.5f','%.5f','%.5f','%.5f'],delimiter=",",newline="\n")
 	return data
 
-def icartt_sp1a_schreiben(data_original,datum):
+def icartt_sp1a_schreiben(data_original,datum,kampagne):
 	global icartt
 	#SP1A_Polar6_20140704_R0.ict
 	name=string.join(['../icartt/','SP1A_Polar6_',datum,'_R0.ict'],'')
 	icartt=open(name,'w')
-	fill_neu = icartt_sp1a_header(datum)
+	fill_neu = icartt_sp1a_header(datum,kampagne)
 	icartt_sp1a_data(data_original)
 	icartt.close()
 	ohne_fill=open(name,'r').read()
