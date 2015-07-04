@@ -191,10 +191,8 @@ def hauptmenu(pfad="../messung"):
 	root.grid()
 	root.title("Hauptmenu")
 
-<<<<<<< HEAD
 # drop down menu zur kampagnenwahl
-=======
->>>>>>> fe5f045... kampagnen auswahl
+
 	kampagnen=[]
 	path=os.path.expanduser('speicher/')
 	for file in sorted(os.listdir(path)):
