@@ -14,6 +14,7 @@
 13;NBLG_MassConc;NBLG_MassConc;mug/cm^3;<;#997400;SP2;
 14;BBHGorSCHG_NumbConc;BBHGorSCHG_NumbConc;#/cm^3;o;#990000;SP2;
 15;SCHGnotBBHG_NumbConc;SCHGnotBBHG_NumbConc;#/cm^3;s;#990089;SP2;
+16;SHSL_NumbConc;SHSL_NumbConc;#/cm^3;s;#990089;SP2;
 16;altitude;altitude;m;>;#748754;SP1A;
 17;geo breite;geo breite;deg;<;#613308;SP1A;
 18;geo laenge;geo laenge;deg;v;#816450;SP1A;
